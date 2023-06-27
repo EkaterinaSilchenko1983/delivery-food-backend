@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 
 const app = require('./app');
 
-const DB_HOST =
-  'mongodb+srv://Kateryna:8ApU8YrKLs4pptdr@cluster0.j2xro2a.mongodb.net/food-delivery-db?retryWrites=true&w=majority';
+const { DB_HOST } = require('./config');
 
 mongoose.set('strictQuery', true);
 
