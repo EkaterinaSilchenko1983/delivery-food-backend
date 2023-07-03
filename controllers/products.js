@@ -1,15 +1,15 @@
-const products = require('../models/products');
+const { Product } = require('../models/product');
 
 const { HttpError, ctrlWrapper } = require('../helpers');
 
 const listProducts = async (req, res) => {
-  const result = await products.listProducts();
+  const result = await Product.find();
   res.json(result);
 };
 
 const getProductById = async (req, res) => {
   const { id } = req.params;
-  const result = await products.getProductById(id);
+  const result = await Product.findById(id);
   if (!result) {
     throw HttpError(404, 'Not found');
   }
@@ -17,8 +17,7 @@ const getProductById = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  const { title, prices } = req.body;
-  const result = await products.addProduct({ title, prices });
+  const result = await Product.create(req.body);
   res.status(201).json(result);
 };
 
@@ -28,7 +27,7 @@ const updateProduct = async (req, res) => {
   }
   const { id } = req.params;
 
-  const result = await products.updateProduct(id, req.body);
+  const result = await Product.findByIdAndUpdate(id, req.body, { new: true });
 
   if (!result) {
     throw HttpError(404, 'Not found');
@@ -38,7 +37,7 @@ const updateProduct = async (req, res) => {
 
 const removeProduct = async (req, res) => {
   const { id } = req.params;
-  const result = await products.removeProduct(id);
+  const result = await Product.findByIdAndRemove(id);
   if (!result) {
     throw HttpError(404, 'Not found');
   }
